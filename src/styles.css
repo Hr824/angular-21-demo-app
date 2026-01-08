@@ -48,10 +48,16 @@
 }
 
 .dropdown-item.active {
-    background-color: #0dcaf0;
+    background-color: lightgrey;
 }
 
-.form-check-input:checked {
-    background-color: #0dcaf0;
-    border-color: #0dcaf0;
+/* https://developer.mozilla.org/fr/docs/Web/CSS/Reference/Selectors/:checked */
+input[type="checkbox"]:checked {
+  background-color: #4ad12b;
+  border-color: green;
+}
+
+input[type="radio"]:checked {
+  background-color: #f97459;
+  border-color: #f97459;
 }

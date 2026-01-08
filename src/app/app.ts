@@ -13,5 +13,5 @@ export class App {
   //Pour les dropdown du menu
   collapsed = true;
 
-  title = signal("angular-21-demo-app"); 
+  //title = signal("angular-21-demo-app"); 
 }

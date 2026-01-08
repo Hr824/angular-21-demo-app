@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, viewChild, viewChildren } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, viewChildren } from '@angular/core';
 import { TodoItem } from '../../models/to-do-list/to-do-item';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -11,7 +11,7 @@ const regexPattern: string = '^([A-Za-zàâäéèêëîïôöùûüçÇÀÂÄÉ�
   styleUrl: './to-do-list-component.css',
 })
 export class ToDoListComponent implements OnInit {
-    descriptionElement = viewChild<ElementRef<HTMLInputElement>>('descriptionItem');
+
     statusFiltersOptions = viewChildren<ElementRef<HTMLInputElement>>('statusFiltersOptions');
 
     todoList = signal<TodoItem[]>([] as TodoItem[]);
@@ -34,7 +34,9 @@ export class ToDoListComponent implements OnInit {
       this.todoList.set(initialTodoList);
     }
 
-
+    /**
+     * Submit the form to create ann item
+     */
     onSubmit(): void {
       if(this.todoForm.valid){
         //  console.table(this.todoForm.value);
@@ -45,47 +47,50 @@ export class ToDoListComponent implements OnInit {
         const storedTodoList = window.localStorage ? localStorage.getItem('todoList') : null;
         const currentTodoList: TodoItem[] = storedTodoList ? JSON.parse(storedTodoList) : [] as TodoItem[];
 
-        //https://www.danvega.dev/blog/find-max-array-objects-javascript
-        const maxId = currentTodoList.reduce(
+        const maxItemId = currentTodoList.reduce(
           (max, todoItem) => (todoItem.id > max ? todoItem.id : max),
           0
         );
 
-        //console.log('maxId', maxId);
-
-
         const itemToAdd: TodoItem = {
-                    id: maxId + 1,
+                    id: maxItemId + 1,
                     description: descript.trim(),
                     done: false
                 };
 
-        //this.todoList.update(currentTodoList => [...currentTodoList, itemToAdd]);
-        currentTodoList.push(itemToAdd);
-        this.todoList.set(currentTodoList);
+        if(currentTodoList.length === 0) {
+          this.statusFiltersOptions()[0].nativeElement.checked = true;
+        }
 
-        localStorage.setItem('todoList', JSON.stringify(this.todoList()));
+        currentTodoList.push(itemToAdd);
+        localStorage.setItem('todoList', JSON.stringify(currentTodoList));
+
+        let filterValue = '';
+        this.statusFiltersOptions().forEach(item => {
+          if(item.nativeElement.checked)
+            filterValue = item.nativeElement.value;
+        });
+
+        this.setTodoList(filterValue, currentTodoList);
 
         this.todoForm.reset();
-
-        //this.focusDescription();
       }
     }
 
-
+    /**
+     * Clear the form
+     */
     onReset() {
       this.todoForm.reset();
-      //this.focusDescription();
-    }
-
-    focusDescription(): void {
-      const elmt = this.descriptionElement();
-      if (elmt) {
-        elmt.nativeElement.focus();
-      }
     }
 
 
+    /**
+     * To display or not the error message if the form is not valid
+     * @param controlName
+     * @param errorCode 
+     * @returns 
+     */
     showErrorMessage(controlName: string, errorCode: string): boolean {
       const control = this.todoForm.controls[controlName];
 
@@ -94,18 +99,18 @@ export class ToDoListComponent implements OnInit {
     }
 
 
-
+    /**
+     * Change item status
+     * @param itemId
+     * @param event 
+     */
     changeTodoItemStatus(itemId: number, event:Event){
 
-      const isChecked = (<HTMLInputElement>event.target).checked;
-      //const isChecked = (event.target as HTMLInputElement).checked;
-
-      console.log('HTMLInputElement', event);
+      const isChecked = (<HTMLInputElement>event.target).checked; //(event.target as HTMLInputElement).checked;
 
       const storedTodoList = window.localStorage ? localStorage.getItem('todoList') : null;
       const currentTodoList: TodoItem[] = storedTodoList ? JSON.parse(storedTodoList) : [] as TodoItem[];
 
-      //https://www.geeksforgeeks.org/javascript/how-to-modify-an-objects-property-in-an-array-of-objects-in-javascript/
       let itemToUpdate = currentTodoList.find(item => item.id === itemId);
       if(itemToUpdate) {
         itemToUpdate.done = isChecked;
@@ -119,55 +124,73 @@ export class ToDoListComponent implements OnInit {
           filterValue = item.nativeElement.value;
       });
       
-
-      if(filterValue === 'option3') { //option3 = tout
-        this.todoList.set(currentTodoList);
-      }
-      else {
-        const done: boolean = (filterValue === 'option1' ? false : true); //option1 = en cours / option2 = terminée
-
-        this.todoList.set(currentTodoList.filter(item => item.done === done));
-      }
-
-      // console.log('TODOLIST : ',this.todoList());
+      this.setTodoList(filterValue, currentTodoList);
     }
 
-
+    /**
+     * Clear the todoList and the localStorage
+     */
     clearTodoList(): void {
       this.todoList.set([]);
       localStorage.removeItem('todoList');
     }
 
 
+    /**
+     * Remove item in the list
+     * @param itemId Item id to remove
+     */
     removeTodoItem(itemId: number): void {
-      this.todoList.update(items => items.filter(item => item.id !== itemId));
 
-      if(this.todoList().length === 0) {
+      const storedTodoList = window.localStorage ? localStorage.getItem('todoList') : null;
+      let currentTodoList: TodoItem[] = storedTodoList ? JSON.parse(storedTodoList) : [] as TodoItem[];
+
+      currentTodoList = currentTodoList.filter(item => item.id !== itemId);
+
+      if(currentTodoList.length === 0) {
+        this.todoList.set([]);
         localStorage.removeItem('todoList');
       }
       else{
-        localStorage.setItem('todoList', JSON.stringify(this.todoList()));
+        localStorage.setItem('todoList', JSON.stringify(currentTodoList));
+
+        let filterValue = '';
+        this.statusFiltersOptions().forEach(item => {
+          if(item.nativeElement.checked)
+            filterValue = item.nativeElement.value;
+        });
+
+        this.setTodoList(filterValue, currentTodoList);
       }
     }
 
-
-    //Changement du filtre
+    /**
+     * Change filter
+     * @param event
+     */
     onStatusFilterChange(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
-      //console.log('RADIO BUTTON', filterValue);
 
       const storedTodoList = window.localStorage ? localStorage.getItem('todoList') : null;
       const currentTodoList: TodoItem[] = storedTodoList ? JSON.parse(storedTodoList) : [] as TodoItem[];
 
+      this.setTodoList(filterValue, currentTodoList);
+    }
+
+
+    /**
+     * Set todoList
+     * @param filterValue
+     * @param todoList 
+     */
+    private setTodoList(filterValue: string, todoList: TodoItem[]): void {
       if(filterValue === 'option3') { //option3 = tout
-        this.todoList.set(currentTodoList);
+          this.todoList.set(todoList);
       }
       else {
         const done: boolean = (filterValue === 'option1' ? false : true); //option1 = en cours / option2 = terminée
 
-        this.todoList.set(currentTodoList.filter(item => item.done === done));
+        this.todoList.set(todoList.filter(item => item.done === done));
       }
-
-      //console.log('TODOLIST : ',this.todoList());
     }
 }
