@@ -1,13 +1,12 @@
 import { Component, ElementRef, inject, OnInit, signal, viewChild, viewChildren } from '@angular/core';
 import { TodoItem } from '../../models/to-do-list/to-do-item';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
 
 const regexPattern: string = '^([A-Za-zàâäéèêëîïôöùûüçÇÀÂÄÉÈÊËÎÏÔÖÙÛÜ -\']*)$';
 
 @Component({
   selector: 'app-to-do-list-component',
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './to-do-list-component.html',
   styleUrl: './to-do-list-component.css',
 })
