@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home-component';
 import { ToDoListComponent } from './pages/to-do-list/to-do-list-component';
 import { ErrorOccurredComponent } from './pages/errors/error-occurred/error-occurred-component';
 import { PageNotFoundComponent } from './pages/errors/page-not-found/page-not-found-component';
+import { PeopleSearchComponent } from './pages/starwars/people/people-search/people-search-component';
 
 export const routes: Routes = [
     {
@@ -15,6 +16,11 @@ export const routes: Routes = [
         path: 'todolist',
         title: `${AppSettings.APP_TITLE} - Todo List`,
         component: ToDoListComponent
+    },
+    {
+        path: 'starwars/people-search',
+        title: `${AppSettings.APP_TITLE} - Starwars People Search`,
+        component: PeopleSearchComponent
     },
     {
         path: 'errorOccurred',

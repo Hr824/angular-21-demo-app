@@ -1,0 +1,36 @@
+<table  class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Height</th>
+            <th scope="col">Eye color</th>
+            <th scope="col">Birth year</th>
+            <th scope="col">Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(p of filteredPeopleList(); track p) {
+            <tr app-people-search-item-component [people]="p"></tr>
+        } @empty {
+            <tr>
+                <td colspan="6"  style="color:red">No results</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" style="text-align: center;padding-top: 20px">
+                <button type="button"  class="btn btn-outline-info btn-sm" (click)="gotoPage(1)" [disabled]="previousButtonIsDisabled()">&lt;&lt;</button>&nbsp;
+                <button type="button"  class="btn btn-outline-info btn-sm" (click)="gotoPreviousPage()" [disabled]="previousButtonIsDisabled()">Précédente</button>&nbsp;
+                <button type="button"  class="btn btn-outline-info btn-sm" (click)="gotoNextPage()" [disabled]="nextButtonIsDisabled()">Suivante</button>&nbsp;
+                <button type="button"  class="btn btn-outline-info btn-sm" (click)="gotoPage(9)" [disabled]="nextButtonIsDisabled()">&gt;&gt;</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" style="text-align: center;padding-top: 10px; color:deeppink">
+                Page {{ currentPage() }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
