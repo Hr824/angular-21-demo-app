@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-12">
+        <div class="mg-page-title">
+            <h3 id="titre">Search a vehicle model (ngModel, ngValue, httpResource)</h3> 
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <label>Model :</label>&nbsp;
+        <select [(ngModel)]="selectedModel">
+            <option value="" disabled selected>Sélectionnez un modèle de véhicule</option>
+            @for(vm of vehicleModels();track vm) {
+                <option [ngValue]="vm">{{ vm }}</option>
+            }
+        </select>
+    </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="col-12">
+      @if(selectedModel()) {
+        <table  class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Capacity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(v of filteredVehicleList(); track v) {
+                    <tr>
+                        <td>{{ v.url.substring(36,v.url.length - 1) }}</td>
+                        <td style="color:blue">{{ v.name | uppercase }}</td>
+                        <td>{{ v.model }}</td>
+                        <td>{{ v.cost_in_credits }}</td>
+                        <td>{{ v.vehicle_class }}</td>
+                        <td>{{ v.cargo_capacity }}</td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="6"  style="color:red">No results</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } @else {
+        <div style="color:red"><b>No vehicle selected</b></div>
+    }  
+    </div>
+</div>
+
+<!-- <pre>{{ filteredVehicleList() | json }}</pre> -->
+<!-- <pre>{{ selectedModel() | json }}</pre> -->

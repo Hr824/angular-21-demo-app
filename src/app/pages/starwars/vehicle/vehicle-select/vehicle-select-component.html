@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-12">
+        <div class="mg-page-title">
+            <h3 id="titre">Select a vehicle in list (ngModel, ngValue, httpResource)</h3> 
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <label>Name :</label>&nbsp;
+        <select [(ngModel)]="selectedVehicle">
+            <option value="undefined" disabled selected>Sélectionnez un véhicule</option>
+            @for(v of vehicleList();track v) {
+                <option [ngValue]="v">{{ v.name }}</option>
+            }
+        </select>
+    </div>
+</div>
+
+
+<!-- <pre>{{ vehicleList() | json }}</pre> -->
+<!-- <pre>{{ selectedVehicle() | json }}</pre> -->
+<br/>
+<div class="row">
+    <div class="col-12">
+      @if(selectedVehicle()) {
+        <div style="color:blue"><b>Selected Vehicle</b></div>
+        <table>
+            <tr>
+                <td><span><b>Nom: </b></span>{{ selectedVehicle()?.name }}</td>
+                <td style="width: 30px"></td>
+                <td><span><b>Model: </b></span>{{ selectedVehicle()?.model }}</td>
+            </tr>
+            <tr>
+                <td><span><b>Equipe: </b></span>{{ selectedVehicle()?.crew }}</td>
+                <td style="width: 30px"></td>
+                <td><span><b>Classe: </b></span>{{ selectedVehicle()?.vehicle_class }}</td>
+            </tr>
+        </table>
+    } @else {
+        <div style="color:red"><b>No vehicle selected</b></div>
+    }  
+    </div>
+</div>

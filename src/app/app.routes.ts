@@ -5,6 +5,8 @@ import { ToDoListComponent } from './pages/to-do-list/to-do-list-component';
 import { ErrorOccurredComponent } from './pages/errors/error-occurred/error-occurred-component';
 import { PageNotFoundComponent } from './pages/errors/page-not-found/page-not-found-component';
 import { PeopleSearchComponent } from './pages/starwars/people/people-search/people-search-component';
+import { VehicleSelectComponent } from './pages/starwars/vehicle/vehicle-select/vehicle-select-component';
+import { VehicleSelectSearchComponent } from './pages/starwars/vehicle/vehicle-select-search/vehicle-select-search-component';
 
 export const routes: Routes = [
     {
@@ -21,6 +23,16 @@ export const routes: Routes = [
         path: 'starwars/people-search',
         title: `${AppSettings.APP_TITLE} - Starwars People Search`,
         component: PeopleSearchComponent
+    },
+    {
+        path: 'starwars/vehicle-select',
+        title: `${AppSettings.APP_TITLE} - Starwars Vehicle Select`,
+        component: VehicleSelectComponent
+    },
+    {
+        path: 'starwars/vehicle-select-search',
+        title: `${AppSettings.APP_TITLE} - Starwars Vehicle Select Search`,
+        component: VehicleSelectSearchComponent
     },
     {
         path: 'errorOccurred',

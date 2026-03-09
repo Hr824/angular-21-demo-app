@@ -12,6 +12,7 @@ export interface Vehicle {
     cargo_capacity: number;
     crew: number;
     model: string;
+    url: string;
     manufacturer: string;
     passengers: number;
     vehicle_class: string;
