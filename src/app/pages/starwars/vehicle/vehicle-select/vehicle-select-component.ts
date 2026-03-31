@@ -2,11 +2,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { Vehicle } from '../../../../models/starwars/vehicle';
 import { VehicleService } from '../../../../services/starwars/vehicle-service';
 import { FormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+//import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-vehicle-select-component',
-  imports: [FormsModule, JsonPipe],
+  imports: [FormsModule],//[FormsModule, JsonPipe],
   templateUrl: './vehicle-select-component.html',
   styleUrl: './vehicle-select-component.css',
 })
