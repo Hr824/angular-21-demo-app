@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-12">
         <div class="mg-page-title">
-            <h3 id="titre">Search a vehicle model (ngModel, ngValue, httpResource)</h3> 
+            <h3 id="titre">Search a vehicle model (ngModel, ngValue, httpResource, httpClient, toSignal)</h3>
+            <div>2 appels API. Un avec httpResource, l'autre avec httpClient</div>
         </div>
     </div>
 </div>
@@ -22,6 +23,7 @@
 <div class="row">
     <div class="col-12">
       @if(selectedModel()) {
+        <div style="color:blue; text-decoration: underline;">Appel API avec httpRessource et signal</div>
         <table  class="table table-striped">
             <thead>
                 <tr>
@@ -58,3 +60,20 @@
 
 <!-- <pre>{{ filteredVehicleList() | json }}</pre> -->
 <!-- <pre>{{ selectedModel() | json }}</pre> -->
+
+
+@if(selectedModel()) {
+    <br/>
+    <div class="row">
+        <div class="col-12">
+            <div style="color:blue; text-decoration: underline;">Appel API avec httpClient, Observable et toSignal()</div>
+            <ul>
+                @for (v of vehicles(); track v.name) {
+                    <li>{{ v.name | uppercase }}</li>
+                } @empty {
+                    <li style="color:red">No results</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
