@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { VehicleService } from '../../../../services/starwars/vehicle-service';
 import { Vehicle } from '../../../../models/starwars/vehicle';
-import { AsyncPipe, JsonPipe, UpperCasePipe } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, of, switchMap } from 'rxjs';
@@ -9,7 +9,7 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vehicle-select-search-component',
-  imports: [FormsModule, JsonPipe, UpperCasePipe, AsyncPipe],
+  imports: [FormsModule, UpperCasePipe],
   templateUrl: './vehicle-select-search-component.html',
   styleUrl: './vehicle-select-search-component.css',
 })

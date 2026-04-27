@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FilterComponent } from '../../../../components/filter-component';
+import { FilterComponent } from '../../../../components/filter/filter-component';
 import { PeopleSearchListComponent } from './people-search-list-component';
 
 @Component({
