@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-12">
+        <div class="mg-page-title">
+            <h3 id="titre">Call .NET API</h3>
+            <div>Appels API avec httpResource</div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="col-12">
+        @if(authorHttpResource.hasValue()) {
+            <span style="font-weight: bold">Auteur : </span>{{ author().Firstname }} {{ author().Lastname | uppercase }}
+            <br/>
+            <span style="font-weight: bold">Id : </span>{{ author().Id }}
+        }
+    </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="col-12">
+      @if(authorHttpResource.hasValue()) {
+        <table  class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="5" style="color: green">{{ author().Firstname }} {{ author().Lastname | uppercase }} Book List</th>
+                </tr>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Release Date</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Price (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(book of author().Books; track book.Id) {
+                    <tr>
+                        <td>{{ book.Id }}</td>
+                        <td style="color:blue">{{ book.Title | uppercase }}</td>
+                        <td>{{ book.ReleaseDate | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ book.Genre }}</td>
+                        <td>{{ book.Price }}</td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="5"  style="color:red">No results</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if(author().Books.length === 0){
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteAuthor(author().Id)">Supprimer l'auteur</button>
+        }
+    } @else if (authorHttpResource.error()) {
+        <div style="color:red">Erreur !!! : {{ authorHttpResource.statusCode() }}</div>
+        <div style="color:red">{{ authorHttpResource.error()?.message }}</div>
+    } @else if (authorHttpResource.isLoading()) {
+        <app-loader-component></app-loader-component>
+    } 
+    </div>
+</div>

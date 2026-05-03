@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-12">
+        <div class="mg-page-title">
+            <h3 id="titre">Call .NET API</h3>
+            <div>Appels API avec httpResource</div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="col-12">
+      @if(authorHttpResource.hasValue()) {
+        <table  class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Books count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(author of authorList(); track author) {
+                    <tr>
+                        <td>{{ author.Id }}</td>
+                        <td>{{ author.Firstname }}</td>
+                        <!-- <td style="color:blue">{{ author.Lastname| uppercase }}</td> -->
+                        <td style="color:blue">
+                            <a [routerLink]="['/dotnet-api/author-detail', author.Id]">{{ author.Lastname| uppercase }}</a>
+                        </td>
+                        <td>{{ author.BooksCount }}</td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="4"  style="color:red">No results</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } @else if (authorHttpResource.error()) {
+        <div style="color:red">Erreur !!! : {{ authorHttpResource.statusCode() }}</div>
+         <div style="color:red">{{ authorHttpResource.error()?.message }}</div>
+    } @else if (authorHttpResource.isLoading()) {
+        <app-loader-component></app-loader-component>
+    } 
+    </div>
+</div>

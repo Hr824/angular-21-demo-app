@@ -7,6 +7,8 @@ import { PageNotFoundComponent } from './pages/errors/page-not-found/page-not-fo
 import { PeopleSearchComponent } from './pages/starwars/people/people-search/people-search-component';
 import { VehicleSelectComponent } from './pages/starwars/vehicle/vehicle-select/vehicle-select-component';
 import { VehicleSelectSearchComponent } from './pages/starwars/vehicle/vehicle-select-search/vehicle-select-search-component';
+import { AuthorListComponent } from './pages/dotnet-api/author/author-list/author-list-component';
+import { AuthorDetailComponent } from './pages/dotnet-api/author/author-detail/author-detail-component';
 
 export const routes: Routes = [
     {
@@ -33,6 +35,16 @@ export const routes: Routes = [
         path: 'starwars/vehicle-select-search',
         title: `${AppSettings.APP_TITLE} - Starwars Vehicle Select Search`,
         component: VehicleSelectSearchComponent
+    },
+    {
+        path: 'dotnet-api/author-list',
+        title: `${AppSettings.APP_TITLE} - Dotnet API Author List`,
+        component: AuthorListComponent
+    },
+    {
+        path: 'dotnet-api/author-detail/:id',
+        title: `${AppSettings.APP_TITLE} - Dotnet API Author Detail`,
+        component: AuthorDetailComponent
     },
     {
         path: 'errorOccurred',
