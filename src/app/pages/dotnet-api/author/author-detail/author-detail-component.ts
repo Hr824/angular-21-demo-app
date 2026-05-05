@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { AuthorService } from '../../../../services/dotnet-api/author-service';
 import { Author } from '../../../../models/dotnet-api/author';
 import { DatePipe, UpperCasePipe } from '@angular/common';
@@ -15,6 +15,9 @@ export class AuthorDetailComponent {
   //Route parameter
   id = input<number>(0);
 
+  deleteButtonIsDisabled = signal<boolean>(false);
+  message = signal<string>('');
+
   authorService = inject(AuthorService);
 
   authorHttpResource = this.authorService.getByIdWithBooksHttpResource(this.id);
@@ -23,7 +26,11 @@ export class AuthorDetailComponent {
 
   deleteAuthor(authorId: number) {
     this.authorService.deleteAuthor(authorId).subscribe({
-      next: (data) => console.log('DATA', data),
+      next: (data) => {
+        this.deleteButtonIsDisabled.set(true);
+        this.message.set(data);
+        console.log('DATA', data);
+      },
       error: (erreur) => console.log('ERREUR', erreur),
       complete: () => console.log('Complete !!!')
     });
