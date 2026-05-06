@@ -11,6 +11,9 @@
 <div class="row">
     <div class="col-12">
       @if(authorHttpResource.hasValue()) {
+        <div>
+            Total : {{ authorList().length }}
+        </div>
         <table  class="table table-striped">
             <thead>
                 <tr>

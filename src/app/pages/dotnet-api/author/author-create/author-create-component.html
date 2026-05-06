@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-12">
+        <div class="mg-page-title">
+            <h3 id="titre">Call .NET API</h3>
+            <div>Appels API + Signals form</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Author creation
+            </div>
+            <div class="card-body">
+                <form (submit)="onSubmit($event)" id="author-create-form">
+                    <div class="row">
+                        <label class="row-label" for="firstNameId">First Name:</label>
+                        <div class="row-value">
+                            <input type="text"
+                                class="form-control"
+                                [formField]="authorForm.Firstname"
+                                id="firstNameId" />
+                        </div>
+                        @if (authorForm.Firstname().invalid() && authorForm.Firstname().touched()) {
+                            <div class="alert alert-danger"  role="alert">
+                                @for (error of authorForm.Firstname().errors(); track error.kind) {
+                                    <div>{{ error.message }}</div>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="row">
+                        <label class="row-label" for="lastNameId">Last Name:</label>
+                        <div class="row-value">
+                            <input type="text"
+                                class="form-control"
+                                [formField]="authorForm.Lastname"
+                                id="lastNameId" />
+                        </div>
+                        @if (authorForm.Lastname().invalid() && authorForm.Lastname().touched()) {
+                            <div class="alert alert-danger"  role="alert">
+                                @for (error of authorForm.Lastname().errors(); track error.kind) {
+                                    <div>{{ error.message }}</div>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="row">
+                        <div class="row-value">
+                            <br/>
+                            <button type="submit"
+                                    [disabled]="authorForm().invalid()"
+                                    class="btn btn-primary btn-sm">
+                                Create
+                            </button>
+                            &nbsp;
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm"
+                                    (click)="reset()">
+                                Reset
+                            </button>
+                            &nbsp;<span class="text-danger">{{ message() }}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12" style="color:blue">
+        Model : {{ authorModel() | json }}
+    </div>
+</div>
