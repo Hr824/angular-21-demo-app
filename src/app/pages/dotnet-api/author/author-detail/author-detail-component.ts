@@ -3,17 +3,18 @@ import { AuthorService } from '../../../../services/dotnet-api/author-service';
 import { Author } from '../../../../models/dotnet-api/author';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { LoaderComponent } from '../../../../components/loader/loader-component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-author-detail-component',
-  imports: [LoaderComponent, DatePipe, UpperCasePipe],
+  imports: [RouterLink, LoaderComponent, DatePipe, UpperCasePipe],
   templateUrl: './author-detail-component.html',
   styleUrl: './author-detail-component.css',
 })
 export class AuthorDetailComponent {
 
   //Route parameter
-  id = input<number>(0);
+  id = input<number>(78);
 
   deleteButtonIsDisabled = signal<boolean>(false);
   message = signal<string>('');

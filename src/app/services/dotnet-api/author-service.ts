@@ -27,4 +27,8 @@ export class AuthorService {
   createAuthor(author: Author): Observable<any> {
     return this.httpClient.post(`${this.authorUrl}/create`, author);
   }
+
+  updateAuthor(author: Author): Observable<any> {
+    return this.httpClient.put(`${this.authorUrl}/update`, author);
+  }
 }

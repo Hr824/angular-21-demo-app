@@ -10,6 +10,7 @@ import { VehicleSelectSearchComponent } from './pages/starwars/vehicle/vehicle-s
 import { AuthorListComponent } from './pages/dotnet-api/author/author-list/author-list-component';
 import { AuthorDetailComponent } from './pages/dotnet-api/author/author-detail/author-detail-component';
 import { AuthorCreateComponent } from './pages/dotnet-api/author/author-create/author-create-component';
+import { AuthorUpdateComponent } from './pages/dotnet-api/author/author-update/author-update-component';
 
 export const routes: Routes = [
     {
@@ -51,6 +52,11 @@ export const routes: Routes = [
         path: 'dotnet-api/author-create',
         title: `${AppSettings.APP_TITLE} - Dotnet API Author Create`,
         component: AuthorCreateComponent
+    },
+    {
+        path: 'dotnet-api/author-update/:id',
+        title: `${AppSettings.APP_TITLE} - Dotnet API Author Update`,
+        component: AuthorUpdateComponent
     },
     {
         path: 'errorOccurred',
