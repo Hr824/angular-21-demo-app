@@ -15,7 +15,9 @@
             <br/>
             <span style="font-weight: bold">Id : </span>{{ author().Id }}
             <br/>
-            <a [routerLink]="['/dotnet-api/author-update', author().Id]">Mettre à jour</a>
+            @if(!deleteButtonIsDisabled()){
+                <a [routerLink]="['/dotnet-api/author-update', author().Id]">Mettre à jour</a>
+            }
         }
     </div>
 </div>

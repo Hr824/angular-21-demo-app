@@ -26,9 +26,9 @@ export const authorSchema = schema<Author>((schemaPath) => {
     disabled(schemaPath.Id);
 
     required(schemaPath.Firstname, { message: "Firstname est obligatoire"});
-    minLength(schemaPath.Firstname, 2, { message: "Minimum 2 caractères" });
-    maxLength(schemaPath.Firstname, 12, { message: "Maximum 12 caractères" });
+    minLength(schemaPath.Firstname, 1, { message: "Minimum 1 caractères" });
+    maxLength(schemaPath.Firstname, 15, { message: "Maximum 15 caractères" });
 
     required(schemaPath.Lastname, { message: "Lastname est obligatoire"});
-    maxLength(schemaPath.Lastname, 10, { message: "Maximum 10 caractères" });
+    maxLength(schemaPath.Lastname, 15, { message: "Maximum 15 caractères" });
 });
