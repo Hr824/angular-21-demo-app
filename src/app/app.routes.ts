@@ -11,6 +11,7 @@ import { AuthorListComponent } from './pages/dotnet-api/author/author-list/autho
 import { AuthorDetailComponent } from './pages/dotnet-api/author/author-detail/author-detail-component';
 import { AuthorCreateComponent } from './pages/dotnet-api/author/author-create/author-create-component';
 import { AuthorUpdateComponent } from './pages/dotnet-api/author/author-update/author-update-component';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     {
@@ -51,7 +52,8 @@ export const routes: Routes = [
     {
         path: 'dotnet-api/author-create',
         title: `${AppSettings.APP_TITLE} - Dotnet API Author Create`,
-        component: AuthorCreateComponent
+        component: AuthorCreateComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'dotnet-api/author-update/:id',
